@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            <span th:text="'Links: ' + ${links.size()}"></span>
+            <a href="/link/create" class="btn btn-sm btn-outline-primary">Create link</a>
+
+            <form action="/list" method="GET">
+                <div class="input-group mb-3 mt-3">
+                    <input th:value="${query}" type="text" class="form-control form-control-sm" name="query">
+                    <button class="btn btn-sm btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>Short link</th>
+                    <th>Full link</th>
+                    <th>Open count</th>
+                </tr>
+
+                <tr th:each="link: ${links}">
+                    <td>
+                        <a th:text="${link.shortLink}"
+                           th:href="'/'+${link.shortLink}"
+                           target="_blank"></a>
+                    </td>
+                    <td th:text="${link.link}"></td>
+                    <td>
+                        <span th:text="${link.openCount}"></span>
+                        <a th:href="'/link/delete?shortLink='+${link.shortLink}"
+                           class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
